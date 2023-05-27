@@ -25,3 +25,15 @@ services:
     image: semitechnologies/img2vec-pytorch:resnet50
     environment:
       ENABLE_CUDA: "0"
+  search-engine:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8081:9200
+    restart: on-failure:0
+    depends_on:
+      - weaviate
+      - i2v-neural
+    environment:
+      WEAVIATE_HOST: "weaviate:8080"
