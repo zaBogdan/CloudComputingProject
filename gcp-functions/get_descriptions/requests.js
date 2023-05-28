@@ -20,5 +20,5 @@ axios.interceptors.response.use(
 const httpService = axios.create(createApiConfig());
 
 exports.getRequest = (data) => {
-  return httpService.get(`https://europe-central2-cc-proiect-388020.cloudfunctions.net/analyze_image`);
+  return httpService.get(`https://europe-central2-cc-proiect-388020.cloudfunctions.net/analyze_image?id=${data}`);
 }
