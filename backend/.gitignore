@@ -1,1 +1,3 @@
 config/*.json
+.env
+!config/example.json
