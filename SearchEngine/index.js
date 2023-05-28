@@ -1,81 +1,54 @@
 import weaviate from "weaviate-ts-client";
-
+import express from "express";
+import bodyParser from "body-parser";
+import formData from "express-form-data";
+import { readFileSync } from "fs";
+console.log(process.env.WEAVIATE_HOST);
 const client = weaviate.client({
   scheme: "http",
-  host: "localhost:8383",
+  host: process.env.WEAVIATE_HOST || "localhost:8080",
 });
 
 const schemaRes = await client.schema.getter().do();
 
 console.log(schemaRes);
 
-const schemaConfig = {
-  class: "Meme",
-  vectorizer: "img2vec-neural",
-  vectorIndexType: "hnsw",
-  moduleConfig: {
-    "img2vec-neural": {
-      imageFields: ["image"],
-    },
-  },
-  properties: [
-    {
-      name: "image",
-      dataType: ["blob"],
-    },
-    {
-      name: "text",
-      dataType: ["string"],
-    },
-  ],
-};
+// web server
+const app = express();
+const port = 9200;
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(formData.parse());
 
-//await client.schema.classCreator().withClass(schemaConfig).do();
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
-import fs, { read, readFile, readFileSync, writeFileSync } from "fs";
-import path from "path";
-
-const saveImage = async (file) => {
-  const directoryPath = "./memes/memes";
-  const filePath = path.join(directoryPath, file);
-  const img = readFileSync(filePath);
-  const b64 = Buffer.from(img).toString("base64");
-
-  await client.data
-    .creator()
+app.post("/meme", async (req, res) => {
+  //read file from form-data named image
+  const imgPath = req.files.image.path;
+  const image = readFileSync(imgPath);
+  const b64 = Buffer.from(image).toString("base64");
+  const resImage = await client.graphql
+    .get()
     .withClassName("Meme")
-    .withProperties({
-      image: b64,
-      text: file,
-    })
+    .withFields(["image"])
+    .withNearImage({ image: b64 })
+    .withLimit(1)
     .do();
-};
 
-const addMemes = async () => {
-  const directoryPath = "./memes/memes";
-  const files = fs.readdirSync(directoryPath);
-  let i = 0;
-  for (const file of files) {
-    console.log(`${i++}/${files.length} ${file}`);
-    if (file.endsWith(".mp4") || file.endsWith(".svg")) {
-      continue;
-    }
-    await saveImage(file);
-  }
-};
+  const result = resImage.data.Get.Meme[0].image;
+  //transform base64 to image
+  const img = Buffer.from(result, "base64");
+  res.writeHead(200, {
+    "Content-Type": "image/png",
+    "Content-Length": img.length,
+    "Content-Disposition": "attachment; filename=download.png",
+  });
 
-//await addMemes();
+  res.end(img);
+});
 
-const test = Buffer.from(readFileSync("./test2.jpg")).toString("base64");
-//console.log(test);
-const resImage = await client.graphql
-  .get()
-  .withClassName("Meme")
-  .withFields(["image"])
-  .withNearImage({ image: test })
-  .withLimit(1)
-  .do();
-
-const result = resImage.data.Get.Meme[0].image;
-//console.log(result);
-writeFileSync("./result.jpg", result, "base64");
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`);
+});
