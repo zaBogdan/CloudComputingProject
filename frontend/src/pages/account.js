@@ -12,7 +12,7 @@ const Page = () => {
   useEffect(() => {
     const d  = async () => {
       try {
-        const resp = await httpService.get('/test', {
+        const resp = await httpService.get('/image/upload', {
           headers: {
             'Authorization': `Bearer ${user.accessToken}`
           }

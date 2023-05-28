@@ -1,18 +1,8 @@
 const router = require('express').Router();
 
-const {
-  registerController,
-} = require('../controller/auth.controller');
+const image = require('./image.route');
 
-const {
-  firebase
-} = require('../utils');
-
-router.get(
-  '/test',
-  firebase.validateAuth,
-  registerController
-);
+router.use('/image', image);
 
 
 module.exports = router;
