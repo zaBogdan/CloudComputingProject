@@ -3,6 +3,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import formData from "express-form-data";
 import { readFileSync } from "fs";
+import request from "request";
 console.log(process.env.WEAVIATE_HOST);
 const client = weaviate.client({
   scheme: "http",
@@ -24,29 +25,38 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.post("/meme", async (req, res) => {
-  //read file from form-data named image
-  const imgPath = req.files.image.path;
-  const image = readFileSync(imgPath);
+app.get("/meme", async (req, res) => {
+  const imageURL = req.query.image;
+  const image = await new Promise((resolve, reject) => {
+    request(
+      {
+        url: imageURL,
+        encoding: null,
+      },
+      (err, res, body) => {
+        if (err) reject(err);
+        else resolve(body);
+      }
+    );
+  });
+
   const b64 = Buffer.from(image).toString("base64");
   const resImage = await client.graphql
     .get()
     .withClassName("Meme")
-    .withFields(["image"])
+    .withFields(["image", "text"])
     .withNearImage({ image: b64 })
     .withLimit(1)
     .do();
 
-  const result = resImage.data.Get.Meme[0].image;
-  //transform base64 to image
-  const img = Buffer.from(result, "base64");
-  res.writeHead(200, {
-    "Content-Type": "image/png",
-    "Content-Length": img.length,
-    "Content-Disposition": "attachment; filename=download.png",
-  });
-
-  res.end(img);
+  const result = resImage.data.Get.Meme[0].text;
+  const response = {
+    id: result,
+    image_url: `https://storage.googleapis.com/memes_bucket_1/${encodeURIComponent(
+      result
+    )}`,
+  };
+  res.send(response);
 });
 
 app.listen(port, () => {
