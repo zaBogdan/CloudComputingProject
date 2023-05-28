@@ -8,18 +8,22 @@ import {
   Divider,
   Typography
 } from '@mui/material';
+import { useAuth } from '../../hooks/use-auth';
+import { useMockedUser } from '../../hooks/use-mocked-user';
 
-const user = {
-  avatar: '/assets/avatars/avatar-anika-visser.png',
-  city: 'Los Angeles',
-  country: 'USA',
-  jobTitle: 'Senior Developer',
-  name: 'Anika Visser',
-  timezone: 'GTM-7'
-};
+// const user = {
+//   avatar: '/assets/avatars/avatar-anika-visser.png',
+//   city: 'Los Angeles',
+//   country: 'USA',
+//   jobTitle: 'Senior Developer',
+//   name: 'Anika Visser',
+//   timezone: 'GTM-7'
+// };
 
-export const AccountProfile = () => (
-  <Card>
+export const AccountProfile = () => {
+  const {user} = useAuth();
+  console.log(user)
+  return (<Card>
     <CardContent>
       <Box
         sx={{
@@ -29,7 +33,7 @@ export const AccountProfile = () => (
         }}
       >
         <Avatar
-          src={user.avatar}
+          src={user.photoURL}
           sx={{
             height: 80,
             mb: 2,
@@ -56,7 +60,7 @@ export const AccountProfile = () => (
         </Typography>
       </Box>
     </CardContent>
-    <Divider />
+    <Divider/>
     <CardActions>
       <Button
         fullWidth
@@ -65,5 +69,5 @@ export const AccountProfile = () => (
         Upload picture
       </Button>
     </CardActions>
-  </Card>
-);
+  </Card>);
+};
