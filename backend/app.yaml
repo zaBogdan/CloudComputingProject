@@ -1,6 +1,7 @@
-runtime: nodejs
-env: flex
+runtime: nodejs16
+env: standard
+service: backend
 
-endpoints_api_service:
-  name: cc-fp-backend.appspot.com
-  rollout_strategy: managed
+automatic_scaling:
+  min_idle_instances: 1
+  max_idle_instances: 2

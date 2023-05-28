@@ -9,7 +9,7 @@ const loadConfig = () => {
     }
     const loadedConfig = dotenv.config().parsed
     config = {
-        port: parseInt(loadedConfig.PORT || '1337', 10),
+        port: parseInt(loadedConfig.PORT || '8080', 10),
         // mongoUri: loadedConfig.MONGO_URI,
         // jwtSecret: loadedConfig.JWT_SECRET,
     }
