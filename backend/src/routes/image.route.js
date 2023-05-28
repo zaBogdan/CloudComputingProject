@@ -6,7 +6,7 @@ const {
 
 const validateAuth = require('../middleware/validateAuth.middleware');
 
-router.get(
+router.post(
   '/upload',
   validateAuth,
   uploadImage

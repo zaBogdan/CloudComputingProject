@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const fileUpload = require("express-fileupload");
 
 require('./utils/firebase');
 const config = require('./module/config');
@@ -12,6 +13,7 @@ app.use(cors({
 }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(fileUpload());
 app.use('/', routes);
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;

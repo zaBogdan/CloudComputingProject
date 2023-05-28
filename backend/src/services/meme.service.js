@@ -1,13 +1,13 @@
 const { firebase } = require('../utils');
-const UserModel = require('../models/user.model');
+const MemeModel = require('../models/meme.model');
 const db = firebase.database;
 
-const COLLECTION_NAME = 'profile';
-const COLLECTION_MODEL = UserModel;
+const COLLECTION_NAME = 'memes';
+const COLLECTION_MODEL = MemeModel;
 
-class UserService {
+class MemeService {
 
-    static getOneUser = async (uid) => {
+    static getOneMeme = async (uid) => {
       const userRef = db.collection(COLLECTION_NAME).doc(uid);
       const userDoc = await userRef.get();
       if (!userDoc.exists) {
@@ -19,7 +19,7 @@ class UserService {
       });
     }
   
-    static getAllUsers = async () => {
+    static getAllMemes = async () => {
       const usersRef = db.collection(COLLECTION_NAME);
       const users = await usersRef.get();
       if (users.empty) {
@@ -35,36 +35,31 @@ class UserService {
       return usersArray;
     }
   
-    static createUser = async (data) => {
-      const userRef = db.collection(COLLECTION_NAME).doc(data.uid);
-      const userDoc = await userRef.get();
-      if (userDoc.exists) {
-        return null;
-      }
-      console.log(data.toJson())
-      await userRef.set(data.toJson());
+    static createMeme = async (data) => {
+      const memeRef = db.collection(COLLECTION_NAME);
+      await memeRef.add(data.toJson())
       return data;
     }
   
-    static updateUser = async (data) => {
-      const userRef = db.collection(COLLECTION_NAME).doc(data.uid);
-      const userDoc = await userRef.get();
+    static updateMeme = async (data) => {
+      const memeRef = db.collection(COLLECTION_NAME).doc(data.uid);
+      const userDoc = await memeRef.get();
       if (!userDoc.exists) {
         return null;
       }
-      await userRef.update(data.toJson());
+      await memeRef.update(data.toJson());
       return data;
     }
   
-    static deleteUser = async (uid) => {
-      const userRef = db.collection(COLLECTION_NAME).doc(uid);
-      const userDoc = await userRef.get();
+    static deleteMeme = async (uid) => {
+      const memeRef = db.collection(COLLECTION_NAME).doc(uid);
+      const userDoc = await memeRef.get();
       if (!userDoc.exists) {
         return null;
       }
-      await userRef.delete();
+      await memeRef.delete();
       return userDoc.data();
     }
 }
 
-module.exports = UserService;
+module.exports = MemeService;

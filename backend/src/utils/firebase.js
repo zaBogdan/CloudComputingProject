@@ -6,7 +6,7 @@ const serviceAccount = JSON.parse(fs.readFileSync('config/service_account.json')
 
 const app = initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: 'https://cc-final-proj-27579.firebaseio.com',
+    databaseURL: 'https://cc-proiect-388020.firebaseio.com',
 });
 
 module.exports = {
