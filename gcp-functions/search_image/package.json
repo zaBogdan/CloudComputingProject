@@ -1,0 +1,8 @@
+{
+  "name": "sample-firestore",
+  "version": "0.0.1",
+  "dependencies": {
+    "firebase-admin": "^11.8.0",
+    "axios": "^1.3.4"
+  }
+}
