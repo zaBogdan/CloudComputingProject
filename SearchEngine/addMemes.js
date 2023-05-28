@@ -2,7 +2,7 @@ import weaviate from "weaviate-ts-client";
 
 const client = weaviate.client({
   scheme: "http",
-  host: "localhost:8383",
+  host: process.env.WEAVIATE_HOST || "localhost:8080",
 });
 
 const schemaRes = await client.schema.getter().do();
