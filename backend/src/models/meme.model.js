@@ -1,13 +1,14 @@
 const CustomStatusCodeError = require('../errors/CustomStatusCodeError');
 
 class MemeModel {
+  // description is deprecated, use tags instead
   constructor(uid, userUid, description, uploadedFileUrl, originalMemeUrl, tags, status) {
     this.uid = uid;
     this.userUid = userUid;
-    this.description = description;
     this.uploadedFileUrl = uploadedFileUrl;
     this.originalMemeUrl = originalMemeUrl;
     this.tags = tags;
+    this.description = "<deprecated> don't use!";
 
     if (![
       'pending',
@@ -25,9 +26,9 @@ class MemeModel {
   toJson = () => {
     return {
       userUid: this.userUid,
-      description: this.description,
       uploadedFileUrl: this.uploadedFileUrl,
       originalMemeUrl: this.originalMemeUrl,
+      description: this.description,
       tags: this.tags,
       status: this.status
     }
@@ -36,7 +37,7 @@ class MemeModel {
   static toClass = (data) => new MemeModel(
     data.uid,
     data.userUid,
-    data.description,
+    '<deprecated>',
     data.uploadedFileUrl,
     data.originalMemeUrl,
     data.tags,

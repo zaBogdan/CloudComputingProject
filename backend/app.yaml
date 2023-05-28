@@ -1,0 +1,6 @@
+runtime: nodejs
+env: flex
+
+endpoints_api_service:
+  name: cc-fp-backend.appspot.com
+  rollout_strategy: managed

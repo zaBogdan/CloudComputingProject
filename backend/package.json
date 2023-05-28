@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "nodemon src/app.js",
-    "start:prod": "NODE_ENV=production node src/app.js"
+    "start": "NODE_ENV=production node src/app.js"
+  },
+  "engines": {
+    "node": "16.15.1"
   },
   "keywords": [],
   "author": "",

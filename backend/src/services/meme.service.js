@@ -19,9 +19,9 @@ class MemeService {
       });
     }
   
-    static getAllMemes = async () => {
+    static getAllMemes = async (userUid) => {
       const usersRef = db.collection(COLLECTION_NAME);
-      const users = await usersRef.get();
+      const users = await usersRef.where("userUid", "==", userUid).get();
       if (users.empty) {
         return [];
       }
