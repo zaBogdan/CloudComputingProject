@@ -50,6 +50,18 @@ const Page = () => {
     }
   });
 
+  const handleGoogle = async () => {
+    try {
+      console.log('Handle google')
+      await auth.signInWithGoogle();
+      router.push('/');
+    } catch (err) {
+      helpers.setStatus({ success: false });
+      helpers.setErrors({ submit: err.message });
+      helpers.setSubmitting(false);
+    }
+  };
+
   return (
     <>
       <Head>
@@ -160,7 +172,7 @@ const Page = () => {
                 >
                   <Button
                     color="primary"
-                    onClick={auth.signInWithGoogle}
+                    onClick={handleGoogle}
                     size="large"
                     variant="outlined"
                     startIcon={

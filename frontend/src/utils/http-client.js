@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useAuth } from 'src/hooks/use-auth';
 import { API_URL } from 'src/constants/api';
 
 const createApiConfig = () => {
@@ -7,6 +8,7 @@ const createApiConfig = () => {
     headers: {
       'Cache-Control': 'no-cache',
       'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
     },
   };
   return axiosConfig;
