@@ -1,5 +1,7 @@
-# Project Documentation
+## Business Model
+![Business Model](model.png)
 
+# Project Documentation
 ## Overview
 This documentation provides an overview of the project that utilizes Google Cloud services. The project aims to provide a web interface where users can upload memes with text. The frontend sends the image to the backend, which then sends it to a service that uses Weaviate to search for images without text in a database. Additionally, the backend also sends the image to a Google Function, which stores the image in a bucket. There is also a cron job that initiates an analysis of the images uploaded by a user. User authentication is handled using Firebase. The frontend is built using Redux, while the backend is implemented in Node.js with Express.
 
