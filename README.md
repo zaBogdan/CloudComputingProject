@@ -9,7 +9,7 @@ The project architecture consists of the following components:
 
 ## Architecture
 
-![Architecture](img.png)
+![Architecture](img1.png)
 
 1. **Frontend**: The user interacts with the web interface, where they can upload a meme image with text. The frontend is developed using Redux, a predictable state container for JavaScript apps.
 
