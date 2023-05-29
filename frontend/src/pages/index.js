@@ -23,7 +23,6 @@ import { useAuth } from '../hooks/use-auth';
 
 const Page = () => {
   const { user } = useAuth();
-  const [selectedFile, setSelectedFile] = useState(null);
   let [memes, setMemes] = useState([]);
   const fileClick = useRef(null);
 
@@ -97,33 +96,19 @@ const Page = () => {
             >
               <Stack spacing={1}>
                 <Typography variant="h4">
-                  Companies
+                  Memes
                 </Typography>
                 <Stack
                   alignItems="center"
                   direction="row"
                   spacing={1}
                 >
-                  <Button
-                    color="inherit"
-                    startIcon={(
-                      <SvgIcon fontSize="small">
-                        <ArrowUpOnSquareIcon/>
-                      </SvgIcon>
-                    )}
+                  <Typography
+                    color="textSecondary"
+                    variant="subtitle2"
                   >
-                    Import
-                  </Button>
-                  <Button
-                    color="inherit"
-                    startIcon={(
-                      <SvgIcon fontSize="small">
-                        <ArrowDownOnSquareIcon/>
-                      </SvgIcon>
-                    )}
-                  >
-                    Export
-                  </Button>
+                    A list of all your original memes uploaded
+                  </Typography>
                 </Stack>
               </Stack>
               <div>
@@ -148,7 +133,6 @@ const Page = () => {
                 </Button>
               </div>
             </Stack>
-            <CompaniesSearch/>
             <Grid
               container
               spacing={3}
@@ -164,17 +148,6 @@ const Page = () => {
                 </Grid>
               ))}
             </Grid>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center'
-              }}
-            >
-              <Pagination
-                count={3}
-                size="small"
-              />
-            </Box>
           </Stack>
         </Container>
       </Box>
