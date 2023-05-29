@@ -50,7 +50,7 @@ const Page = () => {
       if (!event.target.files[0]) {
         return;
       }
-      
+
       const formData = new FormData();
       formData.append('image', event.target.files[0]);
 

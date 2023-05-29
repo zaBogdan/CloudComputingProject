@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
 import ClockIcon from '@heroicons/react/24/solid/ClockIcon';
-import { Avatar, Box, Card, CardContent, Divider, Stack, SvgIcon, Typography } from '@mui/material';
+import { Avatar, Box, Card, CardContent, CardMedia, Chip, Divider, Stack, SvgIcon, Typography } from '@mui/material';
 
 export const CompanyCard = (props) => {
   const { company } = props;
   const { meme } = props;
-  meme.uploadedFileUrl = '';
+  
   return (
     <Card
       sx={{
@@ -16,18 +16,15 @@ export const CompanyCard = (props) => {
       }}
     >
       <CardContent>
-        <Box
+        <CardMedia
+          component="img"
+          image={meme.uploadedFileUrl}
+          alt={meme.uid}
+          height={300}
           sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            pb: 3
+            objectFit: 'contain'
           }}
-        >
-          <Avatar
-            src={meme.uploadedFileUrl}
-            variant="square"
-          />
-        </Box>
+        />
         <Typography
           align="center"
           gutterBottom
@@ -39,7 +36,13 @@ export const CompanyCard = (props) => {
           align="center"
           variant="body1"
         >
-          {/*{company.description}*/}
+          <b>Status:</b> 
+          {
+            (meme.status === 'pending') && <Chip sx={{ ml: 2 }} label="Pending" color="warning"/> ||
+            (meme.status === 'done') && <Chip sx={{ ml: 2 }} label="Done" color="success"/> ||
+            (meme.status === 'await_description') && <Chip sx={{ ml: 2 }} label="Waiting description" color="info"/> ||
+            (true === true) && <Chip sx={{ ml: 2 }} label={meme.status} color="primary"/>
+          }
         </Typography>
       </CardContent>
       <Box sx={{ flexGrow: 1 }}/>
