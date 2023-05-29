@@ -30,39 +30,8 @@ const states = [
   }
 ];
 
-export const AccountProfileDetails = () => {
-  const [values, setValues] = useState({
-    firstName: 'Anika',
-    lastName: 'Visser',
-    email: 'demo@devias.io',
-    phone: '',
-    state: 'los-angeles',
-    country: 'USA'
-  });
-
-  const handleChange = useCallback(
-    (event) => {
-      setValues((prevState) => ({
-        ...prevState,
-        [event.target.name]: event.target.value
-      }));
-    },
-    []
-  );
-
-  const handleSubmit = useCallback(
-    (event) => {
-      event.preventDefault();
-    },
-    []
-  );
-
+export const AccountProfileDetails = ({ formik }) => {
   return (
-    <form
-      autoComplete="off"
-      noValidate
-      onSubmit={handleSubmit}
-    >
       <Card>
         <CardHeader
           subheader="The information can be edited"
@@ -76,29 +45,16 @@ export const AccountProfileDetails = () => {
             >
               <Grid
                 xs={12}
-                md={6}
               >
                 <TextField
                   fullWidth
-                  helperText="Please specify the first name"
-                  label="First name"
-                  name="firstName"
-                  onChange={handleChange}
+                  helperText="Please specify a nickname"
+                  label="Nickname"
+                  name="nickname"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   required
-                  value={values.firstName}
-                />
-              </Grid>
-              <Grid
-                xs={12}
-                md={6}
-              >
-                <TextField
-                  fullWidth
-                  label="Last name"
-                  name="lastName"
-                  onChange={handleChange}
-                  required
-                  value={values.lastName}
+                  value={formik.values.nickname}
                 />
               </Grid>
               <Grid
@@ -109,9 +65,10 @@ export const AccountProfileDetails = () => {
                   fullWidth
                   label="Email Address"
                   name="email"
-                  onChange={handleChange}
-                  required
-                  value={values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.email}
+                  disabled
                 />
               </Grid>
               <Grid
@@ -121,10 +78,11 @@ export const AccountProfileDetails = () => {
                 <TextField
                   fullWidth
                   label="Phone Number"
-                  name="phone"
-                  onChange={handleChange}
+                  name="phoneNumber"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   type="number"
-                  value={values.phone}
+                  value={formik.values.phoneNumber}
                 />
               </Grid>
               <Grid
@@ -135,45 +93,21 @@ export const AccountProfileDetails = () => {
                   fullWidth
                   label="Country"
                   name="country"
-                  onChange={handleChange}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                   required
-                  value={values.country}
+                  value={formik.values.country}
                 />
-              </Grid>
-              <Grid
-                xs={12}
-                md={6}
-              >
-                <TextField
-                  fullWidth
-                  label="Select State"
-                  name="state"
-                  onChange={handleChange}
-                  required
-                  select
-                  SelectProps={{ native: true }}
-                  value={values.state}
-                >
-                  {states.map((option) => (
-                    <option
-                      key={option.value}
-                      value={option.value}
-                    >
-                      {option.label}
-                    </option>
-                  ))}
-                </TextField>
               </Grid>
             </Grid>
           </Box>
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: 'flex-end' }}>
-          <Button variant="contained">
+          <Button variant="contained" type="submit">
             Save details
           </Button>
         </CardActions>
       </Card>
-    </form>
   );
 };

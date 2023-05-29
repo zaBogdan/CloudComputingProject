@@ -3,6 +3,7 @@ import { useAuth } from 'src/hooks/use-auth';
 import { API_URL } from 'src/constants/api';
 
 const createApiConfig = () => {
+  console.log(API_URL)
   const axiosConfig = {
     baseURL: API_URL,
     headers: {

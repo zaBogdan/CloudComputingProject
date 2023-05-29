@@ -9,7 +9,7 @@ import {
   Typography
 } from '@mui/material';
 
-const user = {
+const defaultUser = {
   avatar: '/assets/avatars/avatar-anika-visser.png',
   city: 'Los Angeles',
   country: 'USA',
@@ -18,7 +18,7 @@ const user = {
   timezone: 'GTM-7'
 };
 
-export const AccountProfile = () => (
+export const AccountProfile = ({ account }) => (
   <Card>
     <CardContent>
       <Box
@@ -29,7 +29,7 @@ export const AccountProfile = () => (
         }}
       >
         <Avatar
-          src={user.avatar}
+          src={account.picture || defaultUser.avatar}
           sx={{
             height: 80,
             mb: 2,
@@ -40,30 +40,15 @@ export const AccountProfile = () => (
           gutterBottom
           variant="h5"
         >
-          {user.name}
+          {account.name || defaultUser.name}
         </Typography>
         <Typography
           color="text.secondary"
           variant="body2"
         >
-          {user.city} {user.country}
-        </Typography>
-        <Typography
-          color="text.secondary"
-          variant="body2"
-        >
-          {user.timezone}
+          {account.country || defaultUser.country}
         </Typography>
       </Box>
     </CardContent>
-    <Divider />
-    <CardActions>
-      <Button
-        fullWidth
-        variant="text"
-      >
-        Upload picture
-      </Button>
-    </CardActions>
   </Card>
 );

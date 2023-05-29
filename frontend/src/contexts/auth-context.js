@@ -9,18 +9,24 @@ import {
   GoogleAuthProvider
 } from '@firebase/auth';
 import { auth } from 'src/utils/firebase';
+import httpService from 'src/utils/http-client';
 
 export const AuthContext = createContext({ undefined });
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState({ email: null, uid: null, accessToken: null });
+  const [user, setUser] = useState({ email: null, uid: null, accessToken: null, profile: null });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        console.log("AT,", user.accessToken)
-        setUser({ email: user.email, uid: user.uid, accessToken: user.accessToken });
+        console.log("token:", user.accessToken)
+        const {data} = await httpService.get('/account', {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`
+          }
+        });
+        setUser({ email: user.email, uid: user.uid, accessToken: user.accessToken, profile: data.data.account });
       } else {
         setUser({ email: null, uid: null, accessToken: null });
       }
