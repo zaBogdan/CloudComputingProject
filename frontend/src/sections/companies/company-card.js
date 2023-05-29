@@ -24,7 +24,7 @@ export const CompanyCard = (props) => {
           }}
         >
           <Avatar
-            src={meme.data.uploadedFileUrl}
+            src={meme.uploadedFileUrl}
             variant="square"
           />
         </Box>
@@ -33,7 +33,7 @@ export const CompanyCard = (props) => {
           gutterBottom
           variant="h5"
         >
-          {company.title}
+          {/* {meme.title} */}
         </Typography>
         <Typography
           align="center"
