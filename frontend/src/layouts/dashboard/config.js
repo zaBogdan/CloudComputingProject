@@ -7,6 +7,7 @@ import UserPlusIcon from '@heroicons/react/24/solid/UserPlusIcon';
 import UsersIcon from '@heroicons/react/24/solid/UsersIcon';
 import XCircleIcon from '@heroicons/react/24/solid/XCircleIcon';
 import { SvgIcon } from '@mui/material';
+import PhotoIcon from '@heroicons/react/24/solid/PhotoIcon';
 
 export const items = [
   {
@@ -28,11 +29,11 @@ export const items = [
     )
   },
   {
-    title: 'Companies',
-    path: '/companies',
+    title: 'Memes',
+    path: '/memes',
     icon: (
       <SvgIcon fontSize="small">
-        <ShoppingBagIcon />
+        <PhotoIcon />
       </SvgIcon>
     )
   },
@@ -53,5 +54,5 @@ export const items = [
         <CogIcon />
       </SvgIcon>
     )
-  }
+  },
 ];

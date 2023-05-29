@@ -5,7 +5,8 @@ import { Avatar, Box, Card, CardContent, Divider, Stack, SvgIcon, Typography } f
 
 export const CompanyCard = (props) => {
   const { company } = props;
-
+  const { meme } = props;
+  meme.uploadedFileUrl = '';
   return (
     <Card
       sx={{
@@ -23,7 +24,7 @@ export const CompanyCard = (props) => {
           }}
         >
           <Avatar
-            src={company.logo}
+            src={meme.data.uploadedFileUrl}
             variant="square"
           />
         </Box>
@@ -38,11 +39,11 @@ export const CompanyCard = (props) => {
           align="center"
           variant="body1"
         >
-          {company.description}
+          {/*{company.description}*/}
         </Typography>
       </CardContent>
-      <Box sx={{ flexGrow: 1 }} />
-      <Divider />
+      <Box sx={{ flexGrow: 1 }}/>
+      <Divider/>
       <Stack
         alignItems="center"
         direction="row"
@@ -59,7 +60,7 @@ export const CompanyCard = (props) => {
             color="action"
             fontSize="small"
           >
-            <ClockIcon />
+            <ClockIcon/>
           </SvgIcon>
           <Typography
             color="text.secondary"
@@ -78,15 +79,8 @@ export const CompanyCard = (props) => {
             color="action"
             fontSize="small"
           >
-            <ArrowDownOnSquareIcon />
+            <ArrowDownOnSquareIcon/>
           </SvgIcon>
-          <Typography
-            color="text.secondary"
-            display="inline"
-            variant="body2"
-          >
-            {company.downloads} Downloads
-          </Typography>
         </Stack>
       </Stack>
     </Card>
@@ -94,5 +88,6 @@ export const CompanyCard = (props) => {
 };
 
 CompanyCard.propTypes = {
-  company: PropTypes.object.isRequired
+  // company: PropTypes.object.isRequired
+  meme: PropTypes.object.isRequired
 };
